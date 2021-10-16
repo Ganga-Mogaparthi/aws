@@ -1,0 +1,115 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Creating a ntier network",
+    "Resources": {
+        "ntiervpc": {
+            "Type": "AWS::EC2::VPC",
+            "Properties": {
+                "CidrBlock": "10.10.0.0/16",
+                "EnableDnsHostnames": true,
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "ntierVPC"
+                    }
+                ]
+            }
+        },
+        "websubnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": "10.10.0.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "web1_subnet"
+                    }
+                ]
+            }
+        },
+        "websubnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": "10.10.1.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "web2_subnet"
+                    }
+                ]
+            }
+        },
+        "appsubnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": "10.10.2.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "app1_subnet"
+                    }
+                ]
+            }
+        },
+        "appsubnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": "10.10.3.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "app21_subnet"
+                    }
+                ]
+            }
+        },
+        "dbsubnet1": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": "10.10.4.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "db1_subnet"
+                    }
+                ]
+            }
+        },
+        "dbsubnet2": {
+            "Type": "AWS::EC2::Subnet",
+            "Properties": {
+                "AvailabilityZone": "ap-south-1a",
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                },
+                "CidrBlock": "10.10.5.0/24",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "db2_subnet"
+                    }
+                ]
+            }
+        }
+    }
+}
