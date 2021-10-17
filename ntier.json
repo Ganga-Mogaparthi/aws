@@ -1,11 +1,44 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "Creating a ntier network",
+    "Parameters": {
+        "vpccidr": {
+            "Description": "this is vpc cidr parameter",
+            "Type": "String",
+            "Default": "10.0.0.0/16"
+        },
+        "web1az": {
+            "Description": "this is web1 parameter",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "web2az": {
+            "Description": "this is web2 parameter",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "app1az": {
+            "Description": "this is app1 parameter",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "app2az": {
+            "Description": "this is app2 parameter",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "db1az": {
+            "Description": "this is db1 parameter",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        },
+        "db2az": {
+            "Description": "this is db2 parameter",
+            "Type": "AWS::EC2::AvailabilityZone::Name"
+        }
+    },
     "Resources": {
         "ntiervpc": {
             "Type": "AWS::EC2::VPC",
             "Properties": {
-                "CidrBlock": "10.10.0.0/16",
+                "CidrBlock": {
+                    "Ref": "vpccidr"
+                },
                 "EnableDnsHostnames": true,
                 "Tags": [
                     {
@@ -18,11 +51,26 @@
         "websubnet1": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "ap-south-1a",
+                "AvailabilityZone": {
+                    "Ref": "web1az"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
-                "CidrBlock": "10.10.0.0/24",
+                "CidrBlock": {
+                    "Fn::Select": [
+                        0,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Ref": "vpccidr"
+                                },
+                                6,
+                                8
+                            ]
+                        }
+                    ]
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -34,11 +82,26 @@
         "websubnet2": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "ap-south-1a",
+                "AvailabilityZone": {
+                    "Ref": "web2az"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
-                "CidrBlock": "10.10.1.0/24",
+                "CidrBlock": {
+                    "Fn::Select": [
+                        1,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Ref": "vpccidr"
+                                },
+                                6,
+                                8
+                            ]
+                        }
+                    ]
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -50,11 +113,26 @@
         "appsubnet1": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "ap-south-1a",
+                "AvailabilityZone": {
+                    "Ref": "app1az"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
-                "CidrBlock": "10.10.2.0/24",
+                "CidrBlock": {
+                    "Fn::Select": [
+                        2,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Ref": "vpccidr"
+                                },
+                                6,
+                                8
+                            ]
+                        }
+                    ]
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -66,11 +144,26 @@
         "appsubnet2": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "ap-south-1a",
+                "AvailabilityZone": {
+                    "Ref": "app2az"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
-                "CidrBlock": "10.10.3.0/24",
+                "CidrBlock": {
+                    "Fn::Select": [
+                        3,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Ref": "vpccidr"
+                                },
+                                6,
+                                8
+                            ]
+                        }
+                    ]
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -82,11 +175,26 @@
         "dbsubnet1": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "ap-south-1a",
+                "AvailabilityZone": {
+                    "Ref": "db1az"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
-                "CidrBlock": "10.10.4.0/24",
+                "CidrBlock": {
+                    "Fn::Select": [
+                        4,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Ref": "vpccidr"
+                                },
+                                6,
+                                8
+                            ]
+                        }
+                    ]
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -98,11 +206,26 @@
         "dbsubnet2": {
             "Type": "AWS::EC2::Subnet",
             "Properties": {
-                "AvailabilityZone": "ap-south-1a",
+                "AvailabilityZone": {
+                    "Ref": "db2az"
+                },
                 "VpcId": {
                     "Ref": "ntiervpc"
                 },
-                "CidrBlock": "10.10.5.0/24",
+                "CidrBlock": {
+                    "Fn::Select": [
+                        5,
+                        {
+                            "Fn::Cidr": [
+                                {
+                                    "Ref": "vpccidr"
+                                },
+                                6,
+                                8
+                            ]
+                        }
+                    ]
+                },
                 "Tags": [
                     {
                         "Key": "Name",
@@ -136,7 +259,9 @@
                 "RuleNumber": 100,
                 "Protocol": -1,
                 "RuleAction": "allow",
-                "CidrBlock": "10.0.0.0/24"
+                "CidrBlock": {
+                    "Ref": "vpccidr"
+                }
             }
         },
         "webnaclallhttp": {
@@ -196,10 +321,12 @@
             "Description": "this nacl is for app subnets",
             "Type": "AWS::EC2::NetworkAcl",
             "Properties": {
-                "Tags": [{
-                    "Key": "Name",
-                    "Value": "appsubnetsnacl"
-                }],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "appsubnetsnacl"
+                    }
+                ],
                 "VpcId": {
                     "Ref": "ntiervpc"
                 }
@@ -215,7 +342,9 @@
                 "RuleNumber": 100,
                 "Protocol": -1,
                 "RuleAction": "allow",
-                "CidrBlock": "10.0.0.0/24"
+                "CidrBlock": {
+                    "Ref": "vpccidr"
+                }
             }
         },
         "appnaclallexternal": {
@@ -258,10 +387,12 @@
             "Description": "this nacl is for db subnets",
             "Type": "AWS::EC2::NetworkAcl",
             "Properties": {
-                "Tags": [{
-                    "Key": "Name",
-                    "Value": "dbsubnetsnacl"
-                }],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "dbsubnetsnacl"
+                    }
+                ],
                 "VpcId": {
                     "Ref": "ntiervpc"
                 }
@@ -277,7 +408,9 @@
                 "RuleNumber": 100,
                 "Protocol": -1,
                 "RuleAction": "allow",
-                "CidrBlock": "10.0.0.0/24"
+                "CidrBlock": {
+                    "Ref": "vpccidr"
+                }
             }
         },
         "dbnaclallexternal": {
@@ -313,6 +446,37 @@
                 },
                 "SubnetId": {
                     "Ref": "dbsubnet2"
+                }
+            }
+        },
+        "sgforall": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "sgforall",
+                "SecurityGroupIngress": [
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "Description": "openall",
+                        "FromPort": 22,
+                        "IpProtocol": "TCP",
+                        "ToPort": 22
+                    },
+                    {
+                        "CidrIp": "0.0.0.0/0",
+                        "Description": "openall",
+                        "FromPort": 80,
+                        "IpProtocol": "TCP",
+                        "ToPort": 80
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "sg"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "ntiervpc"
                 }
             }
         }
