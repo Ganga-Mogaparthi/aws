@@ -479,6 +479,58 @@
                     "Ref": "ntiervpc"
                 }
             }
+        },
+        "sgforappsubnets": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "sgforappsubnets8080",
+                "SecurityGroupIngress": [
+                    {
+                        "CidrIp": {
+                            "Ref": "vpccidr"
+                        },
+                        "Description": "openappsg",
+                        "FromPort": 8080,
+                        "IpProtocol": "TCP",
+                        "ToPort": 8080
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "appsgfor8080"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                }
+            }
+        },
+        "sgfordbsubnets": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "sgfordbsubnets3306",
+                "SecurityGroupIngress": [
+                    {
+                        "CidrIp": {
+                            "Ref": "vpccidr"
+                        },
+                        "Description": "opendbsg",
+                        "FromPort": 3306,
+                        "IpProtocol": "TCP",
+                        "ToPort": 3306
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "dbsgfor3306"
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                }
+            }
         }
     }
 }
