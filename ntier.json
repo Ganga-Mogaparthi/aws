@@ -531,6 +531,27 @@
                     "Ref": "ntiervpc"
                 }
             }
+        },
+        "dbsubnetgroup": {
+            "Type": "AWS::RDS::DBSubnetGroup",
+            "Properties": {
+                "DBSubnetGroupDescription": "dbsubnetgroup",
+                "DBSubnetGroupName": "dbsubnetgroup",
+                "SubnetIds": [
+                    {
+                        "Ref": "dbsubnet1"
+                    },
+                    {
+                        "Ref": "dbsubnet2"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "dbsubnetgroup"
+                    }
+                ]
+            }
         }
     }
 }
