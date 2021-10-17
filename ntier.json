@@ -196,11 +196,13 @@
             "Description": "this nacl is for app subnets",
             "Type": "AWS::EC2::NetworkAcl",
             "Properties": {
-                "Tags": {
+                "Tags": [{
                     "Key": "Name",
                     "Value": "appsubnetsnacl"
-                },
-                "VPCId": "ntierVPC"
+                }],
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                }
             }
         },
         "appnaclallinternal": {
@@ -253,14 +255,16 @@
             }
         },
         "dbnacl": {
-            "Description": "this nacl is for app subnets",
+            "Description": "this nacl is for db subnets",
             "Type": "AWS::EC2::NetworkAcl",
             "Properties": {
-                "Tags": {
+                "Tags": [{
                     "Key": "Name",
                     "Value": "dbsubnetsnacl"
-                },
-                "VPCId": "ntierVPC"
+                }],
+                "VpcId": {
+                    "Ref": "ntiervpc"
+                }
             }
         },
         "dbnaclallinternal": {
